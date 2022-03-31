@@ -2,7 +2,6 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 --Group 6 - Arceña, Madera, Sardañas
---use ieee.std_logic_1164.all; 
 
 entity SevenSegDecoder is
 	port(	
@@ -18,9 +17,10 @@ begin
 		Prime <= '1' WHEN "0010" |"0011" | "0101" | "0111" | "1011" | "1101",		--all prime numbers from 0-15
 			'0' WHEN OTHERS;					--the remaining are composite numbers including zero which is neither
 	with (SW) select	
-		SevenSeg <=	"0110000" WHEN "0001",		--Selected signal assignment for SevenSeg
+		SevenSeg <=	"1111110" WHEN "0000",		--apologies Sir, In our previous submission last march 21, we have forgot 
+					"0110000" WHEN "0001",		--to append the SevenSeg for "0000"	
 					"1101101" WHEN "0010",
-					"1111001" WHEN "0011",
+					"1111001" WHEN "0011",		--Selected signal assignment for SevenSeg
 					"0110011" WHEN "0100",
 					"1011011" WHEN "0101",
 					"1011111" WHEN "0110",

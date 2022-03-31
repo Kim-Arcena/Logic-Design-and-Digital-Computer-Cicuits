@@ -1,0 +1,7 @@
+v 3
+file . "SevenSegDecoder_TB.vhd" "20220321083942.000" "20220329213442.798":
+  entity sevensegdecoder_tb at 1( 0) + 0 on 47;
+  architecture sevensegdecoder_tb_arch of sevensegdecoder_tb at 4( 45) + 0 on 48;
+file . "SevenSegDecoder.vhd" "20220329133046.000" "20220329213439.669":
+  entity sevensegdecoder at 1( 0) + 0 on 45;
+  architecture sevensegdecoder_arch of sevensegdecoder at 14( 334) + 0 on 46;
