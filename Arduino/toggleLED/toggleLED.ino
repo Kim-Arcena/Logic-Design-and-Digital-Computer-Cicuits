@@ -1,27 +1,24 @@
-const int buttonPin = 12;  //This is the buttons read pin
-const int ledPin = 13;    // This is the LED output pin
+int led = 13;    // This is the LED output pin
+int button = 12;  //This is the buttons read pin
 
 int ledState = HIGH;      //Variable for current LED state
 int buttonCurrent;          //Variable for current button reading
-int buttonPrevious = LOW;//Variable for last know button reading
-
-unsigned long lastDebounceTime = 0; //last time the pin was toggled, used to keep track of time
-unsigned long debounceDelay = 50;   //the debounce time which user sets prior to run
+int buttonPrevious = LOW;   //Variable for last know button reading
 
 void setup() {
-  pinMode(buttonPin, INPUT);
-  pinMode(ledPin, OUTPUT);
+  pinMode(button, INPUT);
+  pinMode(led, OUTPUT);
   
 }
 
 void loop() {
   //read the button pin, if pressed will be high, if not pressed will be low
-  buttonCurrent = digitalRead(buttonPin);
+  buttonCurrent = digitalRead(button);
   
 
   if (buttonCurrent == HIGH && buttonPrevious == LOW)  {
     if(ledState == HIGH){
-      ledState = Low;
+      ledState = LOW;
     }
     else{
       ledState = HIGH;
@@ -29,6 +26,7 @@ void loop() {
   }
   
   digitalWrite(led, ledState);
+  
   buttonPrevious = buttonCurrent;
 
 }
