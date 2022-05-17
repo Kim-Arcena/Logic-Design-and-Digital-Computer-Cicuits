@@ -31,9 +31,41 @@ void loop() {
     lastDebounceTime = millis();                                               //update the lastDebounceTime 
   }
 
+  //if the button is pressed for more than 5 seconds
   if((millis() - lastDebounceTime) > longPress && button_state == HIGH){       //if the button is pressed for more than longPress (5 seconds)
+    blink();
+  }
 
-    while(true) {                                                              
+  else if((millis() - lastDebounceTime) > debounceDelay){                       //if the button is pressed for less than debounceDelay (50 milliseconds)
+    toggle();
+    // if(currentButton_State != button_state){                                    //if the button state has changed
+    //   button_state = currentButton_State;                                       //update the button_state    
+
+    //   if(button_state == HIGH){                                                 //if the button is pressed
+    //     LED_state = !LED_state;                                                 //toggle the LED state
+    //   }
+    // }
+  }
+
+  digitalWrite(LED_pin, LED_state);                                              //write the LED state to the LED pin       
+  lastButton_state = currentButton_State;                                        //save the last button state
+
+}
+
+void toggle(){
+  int currentButton_State = digitalRead(button_pin);
+  if(currentButton_State != button_state){                                    //if the button state has changed
+      button_state = currentButton_State;                                       //update the button_state    
+
+    if(button_state == HIGH){                                                 //if the button is pressed
+      LED_state = !LED_state;                                                 //toggle the LED state
+    }
+  }
+}
+
+
+void blink(){
+  while(true) {                                                              
       int currentState = digitalRead(button_pin);                              //read the state of the button
       unsigned long currentMillis = millis();                                  //initialize the currentMillis     
 
@@ -67,20 +99,4 @@ void loop() {
       }
       blinking_State  = currentState;                                           // save the last state
     }
-  }
-
-  else if((millis() - lastDebounceTime) > debounceDelay){                       //if the button is pressed for less than debounceDelay (50 milliseconds)
-
-    if(currentButton_State != button_state){                                    //if the button state has changed
-      button_state = currentButton_State;                                       //update the button_state    
-
-      if(button_state == HIGH){                                                 //if the button is pressed
-        LED_state = !LED_state;                                                 //toggle the LED state
-      }
-    }
-  }
-
-  digitalWrite(LED_pin, LED_state);                                              //write the LED state to the LED pin       
-  lastButton_state = currentButton_State;                                        //save the last button state
-
 }
