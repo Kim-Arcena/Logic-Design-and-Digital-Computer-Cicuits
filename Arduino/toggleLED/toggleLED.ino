@@ -31,72 +31,66 @@ void loop() {
     lastDebounceTime = millis();                                               //update the lastDebounceTime 
   }
 
-  //if the button is pressed for more than 5 seconds
   if((millis() - lastDebounceTime) > longPress && button_state == HIGH){       //if the button is pressed for more than longPress (5 seconds)
     blink();
+
   }
 
   else if((millis() - lastDebounceTime) > debounceDelay){                       //if the button is pressed for less than debounceDelay (50 milliseconds)
-    toggle();
-    // if(currentButton_State != button_state){                                    //if the button state has changed
-    //   button_state = currentButton_State;                                       //update the button_state    
-
-    //   if(button_state == HIGH){                                                 //if the button is pressed
-    //     LED_state = !LED_state;                                                 //toggle the LED state
-    //   }
-    // }
+    toggle(); 
   }
 
   digitalWrite(LED_pin, LED_state);                                              //write the LED state to the LED pin       
   lastButton_state = currentButton_State;                                        //save the last button state
-
 }
 
+//function for toggle
 void toggle(){
-  int currentButton_State = digitalRead(button_pin);
+  int currentButton_State = digitalRead(button_pin);                          //read the current state of the button
+  lastButton_state = currentButton_State;
   if(currentButton_State != button_state){                                    //if the button state has changed
       button_state = currentButton_State;                                       //update the button_state    
 
-    if(button_state == HIGH){                                                 //if the button is pressed
-      LED_state = !LED_state;                                                 //toggle the LED state
+      if(button_state == HIGH){                                                 //if the button is pressed
+        LED_state = !LED_state;                                                 //toggle the LED state
+      }
     }
-  }
 }
 
-
+//function for blinking
 void blink(){
   while(true) {                                                              
-      int currentState = digitalRead(button_pin);                              //read the state of the button
-      unsigned long currentMillis = millis();                                  //initialize the currentMillis     
+    int currentState = digitalRead(button_pin);                              //read the state of the button
+    unsigned long currentMillis = millis();                                  //initialize the currentMillis     
 
-      if(currentState == HIGH && blinking_State == LOW ) {                     //if the button is pressed and the blinking state is LOW
-        LED_state = HIGH;                                                      //set the LED state to HIGH
-        digitalWrite(LED_pin, LED_state);                                      //write the LED state to the LED pin 
-        lastDebounceTime = millis();                                           //update the lastDebounceTime
+    if(currentState == HIGH && blinking_State == LOW ) {                     //if the button is pressed and the blinking state is LOW
+      LED_state = HIGH;                                                      //set the LED state to HIGH
+      digitalWrite(LED_pin, LED_state);                                      //write the LED state to the LED pin 
+      lastDebounceTime = millis();                                           //update the lastDebounceTime
 
-        while(true){
-          int currentState = digitalRead(button_pin);                          //read the state of the button
+      while(true){
+        int currentState = digitalRead(button_pin);                          //read the state of the button
 
-          if(currentState == LOW){                                             //break, if the button is turned off
-            break;
-          }
+        if(currentState == LOW){                                             //break, if the button is turned off
+          break;
         }
-        break;
       }
-
-      else if (currentMillis - previousMillis >= blink_interval){              //if the button is pressed for more than blink_interval (1 second)
-        previousMillis = currentMillis;                                        //update the previousMillis     
-
-        if(LED_state == LOW) {                                                 //if the LED state is LOW, set the LED state to HIGH
-          LED_state = HIGH;                                                    
-        }
-        else {                                                                  //else the LED state is HIGH, set the LED state to LOW
-          LED_state = LOW;
-        
-        }
-        // control LED arccoding to the toggled state
-        digitalWrite(LED_pin, LED_state);  //turns the LED on or off based on the variable
-      }
-      blinking_State  = currentState;                                           // save the last state
+      break;
     }
+
+    else if (currentMillis - previousMillis >= blink_interval){              //if the button is pressed for more than blink_interval (1 second)
+      previousMillis = currentMillis;                                        //update the previousMillis     
+
+      if(LED_state == LOW) {                                                 //if the LED state is LOW, set the LED state to HIGH
+        LED_state = HIGH;                                                    
+      }
+      else {                                                                  //else the LED state is HIGH, set the LED state to LOW
+        LED_state = LOW;
+      
+      }
+      // control LED arccoding to the toggled state
+      digitalWrite(LED_pin, LED_state);  //turns the LED on or off based on the variable
+    }
+    blinking_State  = currentState;                                           // save the last state
+  }
 }
