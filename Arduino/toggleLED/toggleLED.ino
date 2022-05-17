@@ -1,20 +1,20 @@
 // constants won't change
-const int button_pin = 7;       // Connect the Button to pin 7 
-const int LED_pin    = 3;       // Connect the LED to pin 3 
-const long longPress = 5000; 
-const long blink_interval = 1000; 
+const int button_pin = 7;                   // Connect the Button to pin 7 
+const int LED_pin    = 3;                   // Connect the LED to pin 3 
+const long longPress = 5000;                //duration of the longpress
+const long blink_interval = 1000;           //1 second interval between blinks
 
 // variables will change:
-int LED_state = HIGH;                           // tracks the current state of LED
-int blinking_State;
+int LED_state = HIGH;                           //initializing the LED state to high
+int blinking_State;                             // tracks the current state of LED
 int button_state;                               // the current state of button
 int lastButton_state = LOW;                     // the previous state of button
 
-unsigned long previousMillis = 0;         
-unsigned long lastDebounceTime = 50; 
-unsigned long debounceDelay = 0; 
+unsigned long previousMillis = 0;               //records the time for the LED
+unsigned long lastDebounceTime = 50;            //debounce time allotted for catching errors
+unsigned long debounceDelay = 0;                //time that for filtering out all those signals
 
-void setup() { //Setup input and output pins using pinMode 
+void setup() { 
     Serial.begin(9600);                         //Start the serial communication
 	
     pinMode(button_pin, INPUT);                 //set button_pin to be an input
@@ -32,11 +32,12 @@ void loop() {
   }
 
   if((millis() - lastDebounceTime) > longPress && button_state == HIGH){       //if the button is pressed for more than longPress (5 seconds)
+    Serial.println("Blinking");
     blink();
-
   }
 
   else if((millis() - lastDebounceTime) > debounceDelay){                       //if the button is pressed for less than debounceDelay (50 milliseconds)
+    Serial.println("Toggle");
     toggle(); 
   }
 
@@ -88,8 +89,8 @@ void blink(){
         LED_state = LOW;
       
       }
-      // control LED arccoding to the toggled state
-      digitalWrite(LED_pin, LED_state);  //turns the LED on or off based on the variable
+      
+      digitalWrite(LED_pin, LED_state);                                       //turns the LED on or off based on the variable
     }
     blinking_State  = currentState;                                           // save the last state
   }
