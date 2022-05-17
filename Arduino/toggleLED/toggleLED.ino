@@ -33,27 +33,27 @@ void loop() {
 
   if((millis() - lastDebounceTime) > longPress && button_state == HIGH){       //if the button is pressed for more than longPress (5 seconds)
     Serial.println("Blinking");
-    blink();
+    blink();                                                                   //call blink function
   }
 
-  else if((millis() - lastDebounceTime) > debounceDelay){                       //if the button is pressed for less than debounceDelay (50 milliseconds)
+  else if((millis() - lastDebounceTime) > debounceDelay){                      //if the button is pressed for less than debounceDelay (50 milliseconds)
     Serial.println("Toggle");
-    toggle(); 
+    toggle();                                                                  //call toggle function
   }
 
-  digitalWrite(LED_pin, LED_state);                                              //write the LED state to the LED pin       
-  lastButton_state = currentButton_State;                                        //save the last button state
+  digitalWrite(LED_pin, LED_state);                                            //write the LED state to the LED pin       
+  lastButton_state = currentButton_State;                                      //save the last button state
 }
 
 //function for toggle
-void toggle(){
-  int currentButton_State = digitalRead(button_pin);                          //read the current state of the button
+void toggle(){  
+  int currentButton_State = digitalRead(button_pin);                           //read the current state of the button
   lastButton_state = currentButton_State;
-  if(currentButton_State != button_state){                                    //if the button state has changed
-      button_state = currentButton_State;                                       //update the button_state    
+  if(currentButton_State != button_state){                                     //if the button state has changed
+      button_state = currentButton_State;                                      //update the button_state    
 
-      if(button_state == HIGH){                                                 //if the button is pressed
-        LED_state = !LED_state;                                                 //toggle the LED state
+      if(button_state == HIGH){                                                //if the button is pressed
+        LED_state = !LED_state;                                                //toggle the LED state
       }
     }
 }
@@ -85,13 +85,13 @@ void blink(){
       if(LED_state == LOW) {                                                 //if the LED state is LOW, set the LED state to HIGH
         LED_state = HIGH;                                                    
       }
-      else {                                                                  //else the LED state is HIGH, set the LED state to LOW
+      else {                                                                 //else the LED state is HIGH, set the LED state to LOW
         LED_state = LOW;
       
       }
       
-      digitalWrite(LED_pin, LED_state);                                       //turns the LED on or off based on the variable
+      digitalWrite(LED_pin, LED_state);                                      //turns the LED on or off based on the variable
     }
-    blinking_State  = currentState;                                           // save the last state
+    blinking_State  = currentState;                                          // save the last state
   }
 }
