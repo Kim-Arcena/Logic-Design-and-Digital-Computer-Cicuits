@@ -37,8 +37,8 @@ void loop() {
   }
 
   else if((millis() - lastDebounceTime) > debounceDelay){                      //if the button is pressed for less than debounceDelay (50 milliseconds)
-    Serial.println("Toggle");
     toggle();                                                                  //call toggle function
+    
   }
 
   digitalWrite(LED_pin, LED_state);                                            //write the LED state to the LED pin       
@@ -67,6 +67,7 @@ void blink(){
     if(currentState == HIGH && blinking_State == LOW ) {                     //if the button is pressed and the blinking state is LOW
       LED_state = HIGH;                                                      //set the LED state to HIGH
       digitalWrite(LED_pin, LED_state);                                      //write the LED state to the LED pin 
+      Serial.println("Toggle");
       lastDebounceTime = millis();                                           //update the lastDebounceTime
 
       while(true){
