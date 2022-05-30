@@ -7,9 +7,13 @@ int readVal;                        //variable to hold the value read from the p
 float volts;                        //variable to hold the voltage value
 long blink_interval = 0;            //1 second interval between blinks
 
+String sensorVal, voltOutput, blinkInt, interval;
 
 void setup() {
   Serial.begin(9600);               //begin serial monitor at 9600 baud
+  sensorVal = String();
+  voltOutput = String();
+  interval = String();
   pinMode(potPin, INPUT);           //set the potentiometer pin as input
   pinMode(ledPin, OUTPUT);          //set the LED pin as output
 }
@@ -17,8 +21,9 @@ void setup() {
 void loop() {
   readVal = analogRead(potPin);                 //read the value from the potentiometer
   volts = (5./1023.) * readVal;                 //convert the value to voltage
-  Serial.println("Volt count is");              //print the voltage count
-  Serial.println(volts);                            
+  sensorVal = "Sensor value: ";
+  voltOutput = sensorVal + volts;
+  Serial.println(voltOutput);                            
 
   if(volts > 2.0){                              //if the voltage is greater than 2.0    
     blink(volts);                               //call the blink function
@@ -37,7 +42,7 @@ void blink(float volts){
   delay(1000);                                        //delay for 1 second to simulate the blink
   digitalWrite(ledPin, LOW);                          //turn the LED off
   delay(blink_interval);                              //delay for the interval between blinks
-  Serial.println("Blinking Interval");                //print the interval between blinks        
-  Serial.println(blink_interval);
-
+  blinkInt = "Blinking Interval: ";
+  interval = blinkInt + blink_interval;
+  Serial.println(interval);                           //print the interval between blinks        
 }
