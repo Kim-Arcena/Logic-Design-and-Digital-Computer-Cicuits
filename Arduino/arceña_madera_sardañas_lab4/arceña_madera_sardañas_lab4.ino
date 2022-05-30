@@ -63,11 +63,11 @@ void blink(){
   while(true) {                                                              
     int currentState = digitalRead(button_pin);                              //read the state of the button
     unsigned long currentMillis = millis();                                  //initialize the currentMillis     
-
+    Serial.println("Toggle");
     if(currentState == HIGH && blinking_State == LOW ) {                     //if the button is pressed and the blinking state is LOW
       LED_state = HIGH;                                                      //set the LED state to HIGH
       digitalWrite(LED_pin, LED_state);                                      //write the LED state to the LED pin 
-      Serial.println("Toggle");
+      
       lastDebounceTime = millis();                                           //update the lastDebounceTime
 
       while(true){
