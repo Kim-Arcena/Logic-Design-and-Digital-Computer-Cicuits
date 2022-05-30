@@ -1,7 +1,7 @@
 //constant variables
-int potPin = A2;                    //connect the potentiomenter to A2         
-int ledPin = 9;                     //connect the LED to pin 9
-int delayTime = 250;                //delay time for serial monitor in milliseconds    
+const int potPin = A2;              //connect the potentiomenter to A2         
+const int ledPin = 9;               //connect the LED to pin 9
+const int delayTime = 250;          //delay time for serial monitor in milliseconds    
 
 int readVal;                        //variable to hold the value read from the potentiometer
 float volts;                        //variable to hold the voltage value
@@ -11,7 +11,7 @@ String sensorVal, voltOutput, blinkInt, interval;
 
 void setup() {
   Serial.begin(9600);               //begin serial monitor at 9600 baud
-  sensorVal = String();
+  sensorVal = String();             //initialize string variables for string additon
   voltOutput = String();
   interval = String();
   pinMode(potPin, INPUT);           //set the potentiometer pin as input
@@ -20,10 +20,10 @@ void setup() {
 
 void loop() {
   readVal = analogRead(potPin);                 //read the value from the potentiometer
-  volts = (5./1023.) * readVal;                 //convert the value to voltage
+  volts = (5.0/1023.0) * readVal;               //convert the value to voltage
   sensorVal = "Sensor value: ";
   voltOutput = sensorVal + volts;
-  Serial.println(voltOutput);                            
+  Serial.println(voltOutput);                   ///print the volts to the serial monitor         
 
   if(volts > 2.0){                              //if the voltage is greater than 2.0    
     blink(volts);                               //call the blink function
@@ -35,7 +35,7 @@ void loop() {
 }
 
 void blink(float volts){
- volts = int(volts);                                    //convert the voltage to an integer
+  volts = int(volts);                                 //convert the voltage to an integer
                       
   long blink_interval = (-1 * volts + 6) * 1000;      //calculate the interval between blinks using the linear sequence formula 
   digitalWrite(ledPin, HIGH);                         //turn the LED on
@@ -46,3 +46,5 @@ void blink(float volts){
   interval = blinkInt + blink_interval;
   Serial.println(interval);                           //print the interval between blinks        
 }
+
+
