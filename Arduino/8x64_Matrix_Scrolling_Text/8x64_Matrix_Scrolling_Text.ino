@@ -38,7 +38,7 @@ void setup(){
   matrix. setRotation ( 8 , 1 ) ; // Display position
 }
 void loop(){
-  String string = "MARCOKES NOT MY HERO";
+  String string = "MARCOKES NOT MY PRESIDENT";
   long int time = millis();
   while(Serial.available()){
   string += char(Serial.read());
