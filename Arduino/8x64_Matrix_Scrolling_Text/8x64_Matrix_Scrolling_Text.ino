@@ -7,15 +7,17 @@
 //Cs - Pin 10)
 //Clk - Pin 13)
 const int pinCS = 10;
+const int pot = A0;
 const int numberOfHorizontalDisplays = 8;
 const int numberOfVerticalDisplays = 1;
 Max72xxPanel matrix = Max72xxPanel(pinCS, numberOfHorizontalDisplays, numberOfVerticalDisplays);
-const int wait = 30; 
+int wait = 0; 
 const int spacer = 1;
 const int width = 5 + spacer; 
 
 void setup(){
   Serial.begin(9600);
+  pinMode(A0, INPUT);
   matrix. setIntensity ( 1 ) ; // Adjust the brightness between 0 and 15
   matrix. setPosition ( 0 , 0 , 0 ) ; // The first display is at <0, 0>
   matrix. setPosition ( 1 , 1 , 0 ) ; // The second display is at <1, 0>
@@ -40,9 +42,11 @@ void setup(){
 void loop(){
   String string = "MARCOKES NOT MY PRESIDENT";
   long int time = millis();
+  
   while(Serial.available()){
-  string += char(Serial.read());
-}
+    string += char(Serial.read());
+  }
+  
   for(int i = 0; i < width * string.length() + matrix.width() - 1 - spacer; i++){
     matrix.fillScreen(LOW);
     int letter = i / width;
@@ -57,6 +61,8 @@ void loop(){
       x -= width;
     }
     matrix.write();
+    wait = analogRead(pot)/10;
+    Serial.println(wait);
     delay(wait);
   }
  }
